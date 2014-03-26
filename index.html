@@ -40,9 +40,7 @@ layout: default
 
 <h3 id="new-project">For new projects: </h3>
 
-<p>First, copy the <a href="https://raw.github.com/jdc0589/mite-node/master/mite.example">example configuration</a> in to the root of your project (usually the source control root), and name the file <kbd>mite.config</kbd>. Then modify the settings to match your environment.</p>
-
-<p>It looks something like this:</p>
+<p>First, copy the <a href="https://raw.github.com/jdc0589/mite-node/master/mite.example">example configuration</a> in to the root of your project (usually the source control root), and name the file <kbd class="code">mite.config</kbd>. It looks something like this:</p>
 <pre>
   {
     "database": "mitedevel",
@@ -54,6 +52,8 @@ layout: default
     "migrationExtension": ".sql"
   }
 </pre>
+
+<p>Once you've modified the settings to match your environment, run <kbd>mite init</kbd>. This will automatically create your <kbd class="code">migrations</kbd> directory and initialize the <kbd class="code">_migration</kbd> table in your database.</p>
 
 <p>For more information, refer to the <a href="#configuration">Configuration</a> section. At some point this will be part of <kbd>mite init</kbd>, but we aren't quite there yet.</p>
 
@@ -82,7 +82,7 @@ layout: default
 <p>Thats it! You just set up mite and created + ran your first migration.</p>
 
 <h2 id="configuration">Configuration</h2>
-<p>Your <kbd>mite.config</kbd> file is where Mite will look for various configuration details. Here are the options currently supported:</p>
+<p>Your <kbd class="code">mite.config</kbd> file is where Mite will look for various configuration details. Here are the options currently supported:</p>
 
 <ul>
   <li><strong>database</strong> &mdash; the database name for your project</li>
