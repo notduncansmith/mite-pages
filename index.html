@@ -14,7 +14,7 @@ layout: default
 
 <p class="lead">The goal of Mite is to make database migrations so simple and painless that doing migrations is easier than not doing them.</p>
 
-<a class="cta" href="https://github.com/soitgoes/mite">Check out the GitHub repo &rarr;</a>
+<a class="cta" href="https://github.com/jdc0589/mite-node">Check out the GitHub repo &rarr;</a>
 
 <hr>
 
@@ -32,18 +32,17 @@ layout: default
 <hr>
 
 <h2 id="installation">Installation</h3>
-<ol>
-  <li><a href="#">Download the distributable</a> or build from source.</li>
-  <li>Add the location of Mite.exe to your PATH variable.</li>
-</ol>
+<p>You know the drill: <kbd>npm install -g mite</kbd></p>
 
 <hr>
 
 <h2 id="getting-started">Getting Started</h2>
 
 <h3 id="new-project">For new projects: </h3>
-<p>It's best to have your migrations stay in their own folder, so create one for them: <kbd>mkdir migrations</kbd> (then <kbd>cd</kbd> into that folder).</p>
-<p>Run <kbd>mite init</kbd> within this directory.  This will take you through a short wizard and spit out a config file that looks something like this:</p>
+
+<p>First, copy the <a href="https://raw.github.com/jdc0589/mite-node/master/mite.example">example configuration</a> in to the root of your project (usually the source control root), and name the file <kbd>mite.config</kbd>. Then modify the settings to match your environment.</p>
+
+<p>It looks something like this:</p>
 <pre>
   {
     "database": "mitedevel",
@@ -51,38 +50,66 @@ layout: default
     "user": "mite",
     "password": "mite",
     "dialect": "mysql",
-    "port": 3306
+    "port": 3306,
+    "migrationExtension": ".sql"
   }
 </pre>
 
+<p>For more information, refer to the <a href="#configuration">Configuration</a> section. At some point this will be part of <kbd>mite init</kbd>, but we aren't quite there yet.</p>
+
+
 <p>Got it? Proceed to <a href="#first-migration">writing your first migration</a>.</p>
-
-
-<h3 id="existing-project">For existing projects:</h3>
-<p>Same steps as above. No, really.</p>
-
-<h3 id="powering-up">Powering up an existing Mite project: </h3>
-<p>Make sure that you have an empty database created and are in your scripts directory. Then run <kbd>mite update</kbd> and you're good to go.</p>
 
 <hr>
 
 <h2 id="first-migration">Writing your first migration</h2>
 <p>Migrations with Mite are literally just SQL (well, with some comments).</p>
 
+<p>Once mite is initialized, run <kbd>mite create</kbd>. This will create a template for your first migration in migrations/, identified by a timestamp. Open the new file up, and after the /* mite:up */ comment add some statements to create a new table/tables. After the /* mite:down */ comment, add statements to rollback anything done in the up section (usually drop table statements).</p>
+
 <pre>
-  /* up */
-  CREATE TABLE dbo.test
-    (
-    id int NOT NULL
-    )  ON [PRIMARY]
-  GO
-  /* down */
-  drop table dbo.test
+  /* mite:up */
+  CREATE TABLE mite_example (id char(36));
+
+  /* mite:down */
+  drop table mite_example
 </pre>
 
-<p>Running <kbd>mite -c</kbd> will create a template for you. Just fill it in with, yknow, SQL.</p>
+<p>Next, run <kbd>mite status</kbd>. It should tell you there is an unexecuted migration. This means you have some migrations defined on disk that haven't been executed yet.</p>
 
-<p>Full documentation is available <a href="https://github.com/soitgoes/mite">on GitHub</a>.</p>
+<p>Running <kbd>mite up</kbd> will execute any unexecuted migrations. New tables defined in the up section of you first migration should now exist in your database, and a subsequent call to <kbd>mite status</kbd> should report that the state is clean.</p>
+
+<p>Thats it! You just set up mite and created + ran your first migration.</p>
+
+<h2 id="configuration">Configuration</h2>
+<p>Your <kbd>mite.config</kbd> file is where Mite will look for various configuration details. Here are the options currently supported:</p>
+
+<ul>
+  <li><strong>database</strong> &mdash; the database name for your project</li>
+  <li><strong>host</strong> &mdash; the host of your database server</li>
+  <li><strong>user</strong> &mdash; the user name with read, write, create, and drop privileges for your database</li>
+  <li><strong>password</strong> &mdash; the password for the specified user</li>
+  <li><strong>dialect</strong> &mdash; the sql dialect for the mite project.</li>
+  <li><strong>port</strong> &mdash; the port of for your database server</li>
+</ul>
+
+<h2 id="commands">Command interface</h2>
+<p>mite uses a lot of git style commands and subcommands. You can execute mite commands from anywhere within a mite project, even in subdirectories. <kbd>mite help</kbd> or <kbd>mite help [command]</kbd> will always give you usage information.</p>
+
+<ul>
+  <li><kbd>version</kbd> &mdash; display the current version of mite.</li>
+  <li><kbd>status</kbd> &mdash; display the migration status. the status can be clean, unexecuted, or dirty.</li>
+  <li><kbd>init</kbd> &mdash; create the migrations directory and initialize the _migration table in your database.</li>
+  <li><kbd>create</kbd> &mdash; create a new empty migration in the migrations/ directory.</li>
+  <li><kbd>up</kbd> &mdash; run any unexecuted migrations. The status must not be dirty prior to runing mite up</li>
+  <li><kbd>stepup</kbd> &mdash; run the first unexecuted migration</li>
+  <li><kbd>down</kbd> &mdash; run the down migrations from the current head all the way down to the first migration. This is destructive and should never be run in a production environment.</li>
+  <li><kbd>stepdown</kbd> &mdash; run the down of the last executed migration. This is destructive and should never be run in a production environment.</li>
+  <li><kbd>help</kbd> &mdash; print usage information</li>
+  <li><kbd>help [command]</kbd> &mdash; print usage information for a specific command</li>
+</ul>
+
+<p>Full documentation is available <a href="https://github.com/jdc0589/mite-node">on GitHub</a>.</p>
 
 <hr>
 
