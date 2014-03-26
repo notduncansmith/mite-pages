@@ -21,7 +21,7 @@ layout: default
 <h2 id="tenets">Tenets of Mite</h2>
 
 <ul>
-  <li>SQL is a perfectly good DSL (Domain-Specific Language)</li>
+  <li>SQL is a perfectly good DSL (Domain-Specific Language).</li>
   <li>Developers know and have tools for SQL.</li>
   <li>Down migrations are required for expected behavior on conflict resolution.</li>
   <li>Order is significant in migrations and is enforced.</li>
@@ -45,8 +45,8 @@ layout: default
   {
     "database": "mitedevel",
     "host": "localhost",
-    "user": "mite",
-    "password": "mite",
+    "user": "whiteboard",
+    "password": "webuildapps",
     "dialect": "mysql",
     "port": 3306,
     "migrationExtension": ".sql"
@@ -65,7 +65,7 @@ layout: default
 <h2 id="first-migration">Writing your first migration</h2>
 <p>Migrations with Mite are literally just SQL (well, with some comments).</p>
 
-<p>Once Mite is initialized, run <kbd>mite create</kbd>. This will create a template for your first migration in migrations/, identified by a timestamp. Open the new file up, and after the /* mite:up */ comment add some statements to create a new table/tables. After the /* mite:down */ comment, add statements to rollback anything done in the up section (usually drop table statements).</p>
+<p>Once Mite is initialized, run <kbd>mite create</kbd>. This will create a template for your first migration in <kbd class="code">migrations</kbd>, identified by a timestamp. Open the new file up, and after the <kbd class="code">/* mite:up */</kbd> comment add some statements to create a new table/tables. After the <kbd class="code">/* mite:down */</kbd> comment, add statements to rollback anything done in the <kbd class="code">up</kbd> section (usually drop table statements).</p>
 
 <pre>
   /* mite:up */
@@ -77,9 +77,9 @@ layout: default
 
 <p>Next, run <kbd>mite status</kbd>. It should tell you there is an unexecuted migration. This means you have some migrations defined on disk that haven't been executed yet.</p>
 
-<p>Running <kbd>mite up</kbd> will execute any unexecuted migrations. New tables defined in the up section of you first migration should now exist in your database, and a subsequent call to <kbd>mite status</kbd> should report that the state is clean.</p>
+<p>Running <kbd>mite up</kbd> will execute any unexecuted migrations. New tables defined in the up section of your first migration should now exist in your database, and a subsequent call to <kbd>mite status</kbd> should report that the state is clean.</p>
 
-<p>Thats it! You just set up mite and created + ran your first migration.</p>
+<p>Thats it! You just set up Mite and created &amp; ran your first migration.</p>
 
 <h2 id="configuration">Configuration</h2>
 <p>Your <kbd class="code">mite.config</kbd> file is where Mite will look for various configuration details. Here are the options currently supported:</p>
@@ -90,11 +90,11 @@ layout: default
   <li><strong>user</strong> &mdash; the user name with read, write, create, and drop privileges for your database</li>
   <li><strong>password</strong> &mdash; the password for the specified user</li>
   <li><strong>dialect</strong> &mdash; the sql dialect for the mite project.</li>
-  <li><strong>port</strong> &mdash; the port of for your database server</li>
+  <li><strong>port</strong> &mdash; the port for your database server</li>
 </ul>
 
 <h2 id="commands">Command interface</h2>
-<p>Mite uses a lot of git style commands and subcommands. You can execute Mite commands from anywhere within a Mite project, even in subdirectories. <kbd>mite help</kbd> or <kbd>mite help [command]</kbd> will always give you usage information.</p>
+<p>Mite uses a lot of git-style commands and subcommands. You can execute Mite commands from anywhere within a Mite project, even in subdirectories. <kbd>mite help</kbd> or <kbd>mite help [command]</kbd> will always give you usage information.</p>
 
 <ul>
   <li><kbd>version</kbd> &mdash; display the current version of mite.</li>
