@@ -65,7 +65,7 @@ layout: default
 <h2 id="first-migration">Writing your first migration</h2>
 <p>Migrations with Mite are literally just SQL (well, with some comments).</p>
 
-<p>Once mite is initialized, run <kbd>mite create</kbd>. This will create a template for your first migration in migrations/, identified by a timestamp. Open the new file up, and after the /* mite:up */ comment add some statements to create a new table/tables. After the /* mite:down */ comment, add statements to rollback anything done in the up section (usually drop table statements).</p>
+<p>Once Mite is initialized, run <kbd>mite create</kbd>. This will create a template for your first migration in migrations/, identified by a timestamp. Open the new file up, and after the /* mite:up */ comment add some statements to create a new table/tables. After the /* mite:down */ comment, add statements to rollback anything done in the up section (usually drop table statements).</p>
 
 <pre>
   /* mite:up */
@@ -94,7 +94,7 @@ layout: default
 </ul>
 
 <h2 id="commands">Command interface</h2>
-<p>mite uses a lot of git style commands and subcommands. You can execute mite commands from anywhere within a mite project, even in subdirectories. <kbd>mite help</kbd> or <kbd>mite help [command]</kbd> will always give you usage information.</p>
+<p>Mite uses a lot of git style commands and subcommands. You can execute mite commands from anywhere within a mite project, even in subdirectories. <kbd>mite help</kbd> or <kbd>mite help [command]</kbd> will always give you usage information.</p>
 
 <ul>
   <li><kbd>version</kbd> &mdash; display the current version of mite.</li>
